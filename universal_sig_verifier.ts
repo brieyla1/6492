@@ -20,18 +20,24 @@ const userIds = [
     'test:brieylaaaaaaa',
     'test:elonmusk',
     'test:manav',
+    'email:ur@mom69.com',
+    'random:manav'
 ];
 
 const dataHashes = [
     '0xec3608877ecbf8084c29896b7eab2a368b2b3c8d003288584d145613dfa4706c',
     '0xec3608877ecbf8084c29896b7eab2a368b2b3c8d003288584d145613dfa4706c',
     '0xe56336f3fd28a2acf0fb9777e88e2fe829cd2dfadacfa3cb5d65af792504281f',
+    '0xec3608877ecbf8084c29896b7eab2a368b2b3c8d003288584d145613dfa4706c',
+    '0xec3608877ecbf8084c29896b7eab2a368b2b3c8d003288584d145613dfa4706c',
 ];
 
 const signatures = [
     '0x63e65a40d879e961d61575fa2667b438fefc27ee12a044d925efc1dc35365f3e3efa399aa28cf8c6fe9d212b78114f645ad7e75cec4d906eab6346eace0584da1b',
     '0xe23e1c9df7a8155381e3d21beebe7c566a6ebbe223bcc3e14c8a6dfbfd0b145463ce3b5d1cdee644a81fd1a3cf0588cb915c418d51f6a649ea9cbc7cb6d4c0ea1b',
     '0x5dbd95670bfd0b653c5f84ba2eab22cd3168864f435e6a3cbe5a531b4c4c9d9d3014547ec2545e104db642aa975bb79088fd62bebacf0a4b9e410b29f5b212221b',
+    '0x63e65a40d879e961d61575fa2667b438fefc27ee12a044d925efc1dc35365f3e3efa399aa28cf8c6fe9d212b78114f645ad7e75cec4d906eab6346eace0584da1b',
+    '0x63e65a40d879e961d61575fa2667b438fefc27ee12a044d925efc1dc35365f3e3efa399aa28cf8c6fe9d212b78114f645ad7e75cec4d906eab6346eace0584da1b'
 ];
 
 // Function to check if an address exists on the Ethereum network
@@ -148,6 +154,19 @@ async function run() {
     console.log('\x1b[36m%s\x1b[0m', 'Signature Validation:');
     console.log('\x1b[36m%s\x1b[0m', 'Expected: Good');
     console.log(!result3 ? '\x1b[32m%s\x1b[0m' : '\x1b[31m%s\x1b[0m', 'Actual:', result3 ? 'Good' : 'Bad');
+
+
+    // Should Fail (Bad Signature - signture not authorised with current userId)
+    const result4 = await verify(userIds[3], dataHashes[3], signatures[3])
+    console.log('\x1b[36m%s\x1b[0m', 'Signature Validation:');
+    console.log('\x1b[36m%s\x1b[0m', 'Expected: Bad');
+    console.log(!result4 ? '\x1b[32m%s\x1b[0m' : '\x1b[31m%s\x1b[0m', 'Actual:', result4 ? 'Good' : 'Bad');
+
+    // Should Fail (Bad UserId - Provider not added, and also not authorised as provider not added)
+    const result5 = await verify(userIds[4], dataHashes[4], signatures[4])
+    console.log('\x1b[36m%s\x1b[0m', 'Signature Validation:');
+    console.log('\x1b[36m%s\x1b[0m', 'Expected: Bad');
+    console.log(!result5 ? '\x1b[32m%s\x1b[0m' : '\x1b[31m%s\x1b[0m', 'Actual:', result5 ? 'Good' : 'Bad');
 }
 
 
